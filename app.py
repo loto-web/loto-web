@@ -5,36 +5,20 @@ import streamlit as st
 # ==========================================
 # LOTO7 (5/1 金曜分)
 LOTO7_DATE = "2026年5月1日 (金)"
-# 見やすいように、数字が小さい順（昇順）に並べています
 LOTO7_DATA = {
-    4: 30.3, 
-    6: 43.2, 
-    19: 31.7, 
-    22: 25.7, 
-    26: 30.6, 
-    33: 29.0, 
-    36: 26.3
+    4: 30.3, 6: 43.2, 19: 31.7, 22: 25.7, 26: 30.6, 33: 29.0, 36: 26.3
 }
 
 # LOTO6 (4/30 木曜分)
 LOTO6_DATE = "2026年4月30日 (木)"
 LOTO6_DATA = {
-    20: 23.4, 
-    22: 22.1, 
-    24: 22.4, 
-    25: 20.0, 
-    41: 22.5, 
-    43: 19.7
+    20: 23.4, 22: 22.1, 24: 22.4, 25: 20.0, 41: 22.5, 43: 19.7
 }
 
 # ミニロト (4/28 火曜分)
 MINILOTO_DATE = "2026年4月28日 (火)"
 MINILOTO_DATA = {
-    7: 22.5, 
-    12: 38.7, 
-    17: 29.9, 
-    23: 28.2, 
-    26: 48.1
+    7: 22.5, 12: 38.7, 17: 29.9, 23: 28.2, 26: 48.1
 }
 
 # あなたのnote記事のURLをここに貼り付けてください
@@ -65,7 +49,7 @@ st.markdown("""
     box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
 }
 .prob-text {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     color: #444;
     margin-top: 5px;
@@ -94,17 +78,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# ボール描画用の共通関数
+# ボール描画用の共通関数（修正箇所：コードブロック誤認防止）
 # ==========================================
 def render_balls(data_dict, ball_class):
     html = '<div style="display: flex; justify-content: center; flex-wrap: wrap;">'
     for num, prob in data_dict.items():
-        html += f'''
-        <div class="ball-container">
-            <div class="loto-ball {ball_class}">{num}</div>
-            <div class="prob-text">{prob}%</div>
-        </div>
-        '''
+        # HTMLを1行に繋げることで、Markdownの誤認を防ぎます
+        html += f'<div class="ball-container"><div class="loto-ball {ball_class}">{num}</div><div class="prob-text">{prob}%</div></div>'
     html += '</div>'
     return html
 
@@ -150,13 +130,13 @@ st.markdown("### 🔥 【全LOTO対応】AI解析データ・完全版")
 st.markdown(f"""
 有料記事（note）では、AIが算出した最新の解析フルデータをすべて公開しています。
 
-1. 出現期待値ランキング（各LOTO 上位20個）
+1. **出現期待値ランキング（各LOTO 上位20個）**
    - 無料枠でお見せしたパーセンテージの「残り13個分」の全貌を公開。
-2. AI推奨・最強5パターン
+2. **AI推奨・最強5パターン**
    - 上位20個の数字を最適に組み合わせた、期待値最大化の5パターン（本命・対抗・中穴・分散・大穴）を網羅。
 
 自力で迷う時間を、AIの確かなデータに変えてみませんか？
-現在、3種セット特別価格【100円】で公開中です。
+**現在、3種セット特別価格【100円】で公開中です。**
 """)
 
 st.link_button("👉 AI解析データ・完全版（note）はこちら", NOTE_URL, use_container_width=True)

@@ -59,13 +59,20 @@ st.markdown("""
 .ball-miniloto { background-color: #FF9800; } /* ミニロト: オレンジ */
 
 .loto-section {
-    padding: 20px;
+    padding: 25px 20px;
     border-radius: 15px;
     background-color: #ffffff;
     border: 1px solid #ddd;
     margin-bottom: 25px;
     text-align: center;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.loto-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    margin-top: 0;
 }
 .premium-box {
     background-color: #fff9db;
@@ -78,12 +85,11 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# ボール描画用の共通関数（修正箇所：コードブロック誤認防止）
+# ボール描画用の共通関数
 # ==========================================
 def render_balls(data_dict, ball_class):
     html = '<div style="display: flex; justify-content: center; flex-wrap: wrap;">'
     for num, prob in data_dict.items():
-        # HTMLを1行に繋げることで、Markdownの誤認を防ぎます
         html += f'<div class="ball-container"><div class="loto-ball {ball_class}">{num}</div><div class="prob-text">{prob}%</div></div>'
     html += '</div>'
     return html
@@ -104,23 +110,34 @@ st.divider()
 st.markdown("### 🎁 今週の無料AI予想（期待値上位1口分）")
 st.caption("※各LOTOの出現期待値ランキングにおけるトップ数字を組み合わせた「本命」パターンです。")
 
-# --- LOTO 7 セクション ---
-st.markdown('<div class="loto-section">', unsafe_allow_html=True)
-st.markdown(f"#### 🔴 LOTO 7 ({LOTO7_DATE})")
-st.markdown(render_balls(LOTO7_DATA, "ball-loto7"), unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
+# --- まとめてHTMLを出力する形に修正（謎の四角を消去） ---
 
-# --- LOTO 6 セクション ---
-st.markdown('<div class="loto-section">', unsafe_allow_html=True)
-st.markdown(f"#### 🔵 LOTO 6 ({LOTO6_DATE})")
-st.markdown(render_balls(LOTO6_DATA, "ball-loto6"), unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
+# LOTO 7 セクション
+html_loto7 = f"""
+<div class="loto-section">
+    <div class="loto-title">🔴 LOTO 7 ({LOTO7_DATE})</div>
+    {render_balls(LOTO7_DATA, "ball-loto7")}
+</div>
+"""
+st.markdown(html_loto7, unsafe_allow_html=True)
 
-# --- ミニロト セクション ---
-st.markdown('<div class="loto-section">', unsafe_allow_html=True)
-st.markdown(f"#### 🟠 ミニロト ({MINILOTO_DATE})")
-st.markdown(render_balls(MINILOTO_DATA, "ball-miniloto"), unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
+# LOTO 6 セクション
+html_loto6 = f"""
+<div class="loto-section">
+    <div class="loto-title">🔵 LOTO 6 ({LOTO6_DATE})</div>
+    {render_balls(LOTO6_DATA, "ball-loto6")}
+</div>
+"""
+st.markdown(html_loto6, unsafe_allow_html=True)
+
+# ミニロト セクション
+html_miniloto = f"""
+<div class="loto-section">
+    <div class="loto-title">🟠 ミニロト ({MINILOTO_DATE})</div>
+    {render_balls(MINILOTO_DATA, "ball-miniloto")}
+</div>
+"""
+st.markdown(html_miniloto, unsafe_allow_html=True)
 
 # ==========================================
 # 有料エリア誘導（プレミアム枠）

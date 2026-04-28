@@ -23,7 +23,7 @@ MINILOTO_DATA = {
 }
 
 # あなたのnote記事のURLをここに貼り付けてください
-NOTE_URL = "https://note.com/your_account/your_article"
+NOTE_URL = "https://note.com/loto_yosoku/n/n4f8a28409abd"
 
 # ==========================================
 # ページ設定とデザイン（CSS）

@@ -2,6 +2,7 @@ import streamlit as st
 
 # ==========================================
 # 毎週ここを更新：AI解析データ（数字: 期待値%）
+# 順序は気にせず入力して大丈夫です（自動でソートされます）
 # ==========================================
 # LOTO7 (5/1 金曜分)
 LOTO7_DATE = "2026年5月1日 (金)"
@@ -85,11 +86,14 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# ボール描画用の共通関数
+# ボール描画用の共通関数（修正：確率が高い順にソート）
 # ==========================================
 def render_balls(data_dict, ball_class):
+    # データを確率（値）で降順（高い順）にソート
+    sorted_data = sorted(data_dict.items(), key=lambda x: x[1], reverse=True)
+    
     html = '<div style="display: flex; justify-content: center; flex-wrap: wrap;">'
-    for num, prob in data_dict.items():
+    for num, prob in sorted_data:
         html += f'<div class="ball-container"><div class="loto-ball {ball_class}">{num}</div><div class="prob-text">{prob}%</div></div>'
     html += '</div>'
     return html
@@ -103,6 +107,7 @@ st.subheader("統計的エッジで「確率の重力」を可視化する")
 st.markdown("""
 過去20年分のデータを機械学習（LightGBM）で解析。
 「平均への回帰」と「出現インターバル」から、AIが今週最も期待値の高まっている数字とパーセンテージを算出しました。
+（左から確率が高い順に並べています）
 """)
 
 st.divider()
@@ -110,13 +115,15 @@ st.divider()
 st.markdown("### 🎁 今週の無料AI予想（期待値上位1口分）")
 st.caption("※各LOTOの出現期待値ランキングにおけるトップ数字を組み合わせた「本命」パターンです。")
 
-# --- まとめてHTMLを出力する形に修正（謎の四角を消去） ---
+# ==========================================
+# まとめてHTMLを出力（修正：インデントを完全に削除）
+# ==========================================
 
 # LOTO 7 セクション
 html_loto7 = f"""
 <div class="loto-section">
-    <div class="loto-title">🔴 LOTO 7 ({LOTO7_DATE})</div>
-    {render_balls(LOTO7_DATA, "ball-loto7")}
+<div class="loto-title">🔴 LOTO 7 ({LOTO7_DATE})</div>
+{render_balls(LOTO7_DATA, "ball-loto7")}
 </div>
 """
 st.markdown(html_loto7, unsafe_allow_html=True)
@@ -124,8 +131,8 @@ st.markdown(html_loto7, unsafe_allow_html=True)
 # LOTO 6 セクション
 html_loto6 = f"""
 <div class="loto-section">
-    <div class="loto-title">🔵 LOTO 6 ({LOTO6_DATE})</div>
-    {render_balls(LOTO6_DATA, "ball-loto6")}
+<div class="loto-title">🔵 LOTO 6 ({LOTO6_DATE})</div>
+{render_balls(LOTO6_DATA, "ball-loto6")}
 </div>
 """
 st.markdown(html_loto6, unsafe_allow_html=True)
@@ -133,8 +140,8 @@ st.markdown(html_loto6, unsafe_allow_html=True)
 # ミニロト セクション
 html_miniloto = f"""
 <div class="loto-section">
-    <div class="loto-title">🟠 ミニロト ({MINILOTO_DATE})</div>
-    {render_balls(MINILOTO_DATA, "ball-miniloto")}
+<div class="loto-title">🟠 ミニロト ({MINILOTO_DATE})</div>
+{render_balls(MINILOTO_DATA, "ball-miniloto")}
 </div>
 """
 st.markdown(html_miniloto, unsafe_allow_html=True)

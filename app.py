@@ -86,7 +86,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# ボール描画用の共通関数（修正：確率が高い順にソート）
+# ボール描画用の共通関数
 # ==========================================
 def render_balls(data_dict, ball_class):
     # データを確率（値）で降順（高い順）にソート
@@ -116,55 +116,29 @@ st.markdown("### 🎁 今週の無料AI予想（期待値上位1口分）")
 st.caption("※各LOTOの出現期待値ランキングにおけるトップ数字を組み合わせた「本命」パターンです。")
 
 # ==========================================
-# まとめてHTMLを出力（修正：インデントを完全に削除）
+# HTMLを完全に1行に繋げて出力（謎の黄色い□を物理的に防止）
 # ==========================================
 
 # LOTO 7 セクション
-html_loto7 = f"""
-<div class="loto-section">
-<div class="loto-title">🔴 LOTO 7 ({LOTO7_DATE})</div>
-{render_balls(LOTO7_DATA, "ball-loto7")}
-</div>
-"""
+html_loto7 = f'<div class="loto-section"><div class="loto-title">🔴 LOTO 7 ({LOTO7_DATE})</div>{render_balls(LOTO7_DATA, "ball-loto7")}</div>'
 st.markdown(html_loto7, unsafe_allow_html=True)
 
 # LOTO 6 セクション
-html_loto6 = f"""
-<div class="loto-section">
-<div class="loto-title">🔵 LOTO 6 ({LOTO6_DATE})</div>
-{render_balls(LOTO6_DATA, "ball-loto6")}
-</div>
-"""
+html_loto6 = f'<div class="loto-section"><div class="loto-title">🔵 LOTO 6 ({LOTO6_DATE})</div>{render_balls(LOTO6_DATA, "ball-loto6")}</div>'
 st.markdown(html_loto6, unsafe_allow_html=True)
 
 # ミニロト セクション
-html_miniloto = f"""
-<div class="loto-section">
-<div class="loto-title">🟠 ミニロト ({MINILOTO_DATE})</div>
-{render_balls(MINILOTO_DATA, "ball-miniloto")}
-</div>
-"""
+html_miniloto = f'<div class="loto-section"><div class="loto-title">🟠 ミニロト ({MINILOTO_DATE})</div>{render_balls(MINILOTO_DATA, "ball-miniloto")}</div>'
 st.markdown(html_miniloto, unsafe_allow_html=True)
 
 # ==========================================
 # 有料エリア誘導（プレミアム枠）
 # ==========================================
-st.markdown('<div class="premium-box">', unsafe_allow_html=True)
-st.markdown("### 🔥 【全LOTO対応】AI解析データ・完全版")
-st.markdown(f"""
-有料記事（note）では、AIが算出した最新の解析フルデータをすべて公開しています。
-
-1. **出現期待値ランキング（各LOTO 上位20個）**
-   - 無料枠でお見せしたパーセンテージの「残り13個分」の全貌を公開。
-2. **AI推奨・最強5パターン**
-   - 上位20個の数字を最適に組み合わせた、期待値最大化の5パターン（本命・対抗・中穴・分散・大穴）を網羅。
-
-自力で迷う時間を、AIの確かなデータに変えてみませんか？
-**現在、3種セット特別価格【100円】で公開中です。**
-""")
+# ここも1行で記述して安全対策
+html_premium = f'<div class="premium-box"><h3>🔥 【全LOTO対応】AI解析データ・完全版</h3><p>有料記事（note）では、AIが算出した最新の解析フルデータをすべて公開しています。</p><p>1. <strong>出現期待値ランキング（各LOTO 上位20個）</strong><br> - 無料枠でお見せしたパーセンテージの「残り13個分」の全貌を公開。<br>2. <strong>AI推奨・最強5パターン</strong><br> - 上位20個の数字を最適に組み合わせた、期待値最大化の5パターン（本命・対抗・中穴・分散・大穴）を網羅。</p><p>自力で迷う時間を、AIの確かなデータに変えてみませんか？<br><strong>現在、3種セット特別価格【100円】で公開中です。</strong></p></div>'
+st.markdown(html_premium, unsafe_allow_html=True)
 
 st.link_button("👉 AI解析データ・完全版（note）はこちら", NOTE_URL, use_container_width=True)
-st.markdown('</div>', unsafe_allow_html=True)
 
 st.divider()
 st.caption("免責事項：本解析は統計学的な予測であり、当選を保証するものではありません。購入に関する最終決定は自己責任でお願いいたします。")
